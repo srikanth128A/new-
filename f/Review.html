@@ -1,0 +1,544 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dining Spot - Reviews</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: #f9f5f0;
+            color: #333;
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        header {
+            background-color: #d4a762;
+            color: white;
+            padding: 25px 0;
+            text-align: center;
+            margin-bottom: 40px;
+            border-bottom: 5px solid #b88a4a;
+        }
+        
+        h1 {
+            margin: 0;
+            font-size: 2.5em;
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.2);
+        }
+        
+        .tagline {
+            font-style: italic;
+            margin-top: 5px;
+            font-size: 1.1em;
+        }
+        
+        .review-intro {
+            text-align: center;
+            max-width: 800px;
+            margin: 0 auto 40px;
+        }
+        
+        .tabs {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 30px;
+            border-bottom: 1px solid #ddd;
+        }
+        
+        .tab-btn {
+            padding: 12px 25px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 1.1em;
+            color: #666;
+            position: relative;
+        }
+        
+        .tab-btn.active {
+            color: #b88a4a;
+            font-weight: bold;
+        }
+        
+        .tab-btn.active::after {
+            content: '';
+            position: absolute;
+            bottom: -1px;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background-color: #b88a4a;
+        }
+        
+        .tab-content {
+            display: none;
+        }
+        
+        .tab-content.active {
+            display: block;
+        }
+        
+        .reviews-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 30px;
+            margin-bottom: 50px;
+        }
+        
+        .review-card {
+            background: white;
+            border-radius: 10px;
+            padding: 25px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        
+        .review-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+        
+        .reviewer-name {
+            font-weight: bold;
+            font-size: 1.2em;
+            color: #333;
+        }
+        
+        .review-date {
+            color: #777;
+            font-size: 0.9em;
+        }
+        
+        .rating {
+            color: #d4a762;
+            font-size: 1.2em;
+            margin-bottom: 10px;
+        }
+        
+        .review-type {
+            display: inline-block;
+            background-color: #f0f0f0;
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-size: 0.8em;
+            margin-bottom: 10px;
+            color: #555;
+        }
+        
+        .review-text {
+            color: #555;
+            line-height: 1.6;
+        }
+        
+        .add-review-btn {
+            background-color: #b88a4a;
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            font-size: 1.1em;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            display: block;
+            margin: 0 auto 40px;
+        }
+        
+        .add-review-btn:hover {
+            background-color: #a0783e;
+        }
+        
+        .review-form-container {
+            display: none;
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #555;
+        }
+        
+        .form-control {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 1em;
+        }
+        
+        textarea.form-control {
+            min-height: 150px;
+            resize: vertical;
+        }
+        
+        .form-row {
+            display: flex;
+            gap: 20px;
+        }
+        
+        .form-row .form-group {
+            flex: 1;
+        }
+        
+        .rating-stars {
+            display: flex;
+            gap: 5px;
+            margin-bottom: 15px;
+        }
+        
+        .star {
+            font-size: 2em;
+            color: #ddd;
+            cursor: pointer;
+            transition: color 0.2s;
+        }
+        
+        .star.selected {
+            color: #d4a762;
+        }
+        
+        .submit-btn {
+            background-color: #8b0000;
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            font-size: 1.1em;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            display: block;
+            width: 100%;
+        }
+        
+        .submit-btn:hover {
+            background-color: #6b0000;
+        }
+        
+        .confirmation {
+            display: none;
+            background: #f0f8f0;
+            border: 1px solid #c8e6c8;
+            padding: 20px;
+            border-radius: 5px;
+            margin-top: 20px;
+            color: #2e7d32;
+        }
+        
+        footer {
+            text-align: center;
+            padding: 20px;
+            background-color: #333;
+            color: white;
+            margin-top: 50px;
+        }
+        
+        @media (max-width: 768px) {
+            .reviews-container {
+                grid-template-columns: 1fr;
+            }
+            
+            .form-row {
+                flex-direction: column;
+                gap: 0;
+            }
+            
+            .tab-btn {
+                padding: 10px 15px;
+                font-size: 1em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1>Dining Spot</h1>
+            <div class="tagline">Share Your Experience With Us</div>
+        </div>
+    </header>
+    
+    <div class="container">
+        <div class="review-intro">
+            <h2>Customer Reviews</h2>
+            <p>Read what our guests have to say about their experiences at Dining Spot. We value your feedback to help us improve our services.</p>
+        </div>
+        
+        <div class="tabs">
+            <button class="tab-btn active" data-tab="food-reviews">Food Reviews</button>
+            <button class="tab-btn" data-tab="accommodation-reviews">Accommodation Reviews</button>
+        </div>
+        
+        <div id="food-reviews" class="tab-content active">
+            <div class="reviews-container">
+                <div class="review-card">
+                    <div class="review-header">
+                        <div class="reviewer-name">Amrutha</div>
+                        <div class="review-date">October 15, 2023</div>
+                    </div>
+                    <div class="rating">★★★★★</div>
+                    <span class="review-type">Food Review</span>
+                    <div class="review-text">
+                        The steak was cooked to absolute perfection - exactly medium rare as I requested. The wine pairing suggestion from the sommelier was spot on. One of the best dining experiences I've had this year!
+                    </div>
+                </div>
+                
+                <div class="review-card">
+                    <div class="review-header">
+                        <div class="reviewer-name">Hema</div>
+                        <div class="review-date">October 10, 2023</div>
+                    </div>
+                    <div class="rating">★★★★☆</div>
+                    <span class="review-type">Food Review</span>
+                    <div class="review-text">
+                        Amazing flavors in every dish! The seafood pasta was particularly memorable. Service was attentive without being intrusive. Only reason not 5 stars is that the dessert menu was a bit limited.
+                    </div>
+                </div>
+                
+                <div class="review-card">
+                    <div class="review-header">
+                        <div class="reviewer-name">Srikanth</div>
+                        <div class="review-date">October 5, 2023</div>
+                    </div>
+                    <div class="rating">★★★★★</div>
+                    <span class="review-type">Food Review</span>
+                    <div class="review-text">
+                        Celebrated our anniversary here and it was perfect from start to finish. The chef even prepared a special dessert for us when they found out it was our special day. Highly recommend the tasting menu!
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div id="accommodation-reviews" class="tab-content">
+            <div class="reviews-container">
+                <div class="review-card">
+                    <div class="review-header">
+                        <div class="reviewer-name">Bhavyanth</div>
+                        <div class="review-date">September 28, 2023</div>
+                    </div>
+                    <div class="rating">★★★★★</div>
+                    <span class="review-type">Accommodation Review</span>
+                    <div class="review-text">
+                        Stayed in the Garden Suite for our weekend getaway. The room was spacious, beautifully decorated, and had an amazing view. The included breakfast from the restaurant was delicious. Will definitely return!
+                    </div>
+                </div>
+                
+                <div class="review-card">
+                    <div class="review-header">
+                        <div class="reviewer-name">Srikanth</div>
+                        <div class="review-date">September 20, 2023</div>
+                    </div>
+                    <div class="rating">★★★☆☆</div>
+                    <span class="review-type">Accommodation Review</span>
+                    <div class="review-text">
+                        The room was comfortable and clean, but the walls were a bit thin - could hear noise from adjacent rooms. Restaurant downstairs was excellent though, which made up for it.
+                    </div>
+                </div>
+                
+                <div class="review-card">
+                    <div class="review-header">
+                        <div class="reviewer-name">Hema</div>
+                        <div class="review-date">September 15, 2023</div>
+                    </div>
+                    <div class="rating">★★★★☆</div>
+                    <span class="review-type">Accommodation Review</span>
+                    <div class="review-text">
+                        Lovely boutique hotel with excellent service. The spa facilities were wonderful. Only minor complaint was that our room was a bit warm even with AC on full. Otherwise perfect stay!
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <button id="showReviewForm" class="add-review-btn">Write a Review</button>
+        
+        <div id="reviewFormContainer" class="review-form-container">
+            <h2>Share Your Experience</h2>
+            <form id="reviewForm">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="reviewer-name">Your Name</label>
+                        <input type="text" id="reviewer-name" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="reviewer-email">Email Address</label>
+                        <input type="email" id="reviewer-email" class="form-control" required>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label>Review Type</label>
+                    <div>
+                        <input type="radio" id="food-review" name="review-type" value="food" checked>
+                        <label for="food-review" style="display: inline; margin-right: 15px;">Food Review</label>
+                        
+                        <input type="radio" id="accommodation-review" name="review-type" value="accommodation">
+                        <label for="accommodation-review" style="display: inline;">Accommodation Review</label>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label>Your Rating</label>
+                    <div class="rating-stars">
+                        <span class="star" data-rating="1">☆</span>
+                        <span class="star" data-rating="2">☆</span>
+                        <span class="star" data-rating="3">☆</span>
+                        <span class="star" data-rating="4">☆</span>
+                        <span class="star" data-rating="5">☆</span>
+                    </div>
+                    <input type="hidden" id="rating-value" value="0" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="review-title">Review Title</label>
+                    <input type="text" id="review-title" class="form-control" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="review-text">Your Review</label>
+                    <textarea id="review-text" class="form-control" required></textarea>
+                </div>
+                
+                <button type="submit" class="submit-btn">Submit Review</button>
+                
+                <div id="confirmation" class="confirmation">
+                    <h3>Thank you for your review!</h3>
+                    <p>We appreciate you taking the time to share your experience at Dining Spot. Your feedback helps us improve our services.</p>
+                    <p>Your review will be visible to others after moderation.</p>
+                </div>
+            </form>
+        </div>
+    </div>
+    
+    <footer>
+        <div class="container">
+            <p>&copy; 2023 Dining Spot. All rights reserved.</p>
+            <p>as, Denton City, Texas, USA|9392604717 | info@diningspot.com</p>
+        </div>
+    </footer>
+    
+    <script>
+        // Tab functionality
+        document.querySelectorAll('.tab-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                // Remove active class from all tabs
+                document.querySelectorAll('.tab-btn').forEach(t => t.classList.remove('active'));
+                document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+                
+                // Add active class to clicked tab
+                this.classList.add('active');
+                const tabId = this.getAttribute('data-tab');
+                document.getElementById(tabId).classList.add('active');
+            });
+        });
+        
+        // Show review form
+        document.getElementById('showReviewForm').addEventListener('click', function() {
+            document.getElementById('reviewFormContainer').style.display = 'block';
+            document.getElementById('reviewForm').scrollIntoView({ behavior: 'smooth' });
+        });
+        
+        // Star rating functionality
+        document.querySelectorAll('.star').forEach(star => {
+            star.addEventListener('click', function() {
+                const rating = parseInt(this.getAttribute('data-rating'));
+                document.getElementById('rating-value').value = rating;
+                
+                // Update star display
+                document.querySelectorAll('.star').forEach((s, index) => {
+                    if (index < rating) {
+                        s.classList.add('selected');
+                        s.textContent = '★';
+                    } else {
+                        s.classList.remove('selected');
+                        s.textContent = '☆';
+                    }
+                });
+            });
+            
+            // Hover effect
+            star.addEventListener('mouseover', function() {
+                const rating = parseInt(this.getAttribute('data-rating'));
+                document.querySelectorAll('.star').forEach((s, index) => {
+                    if (index < rating) {
+                        s.textContent = '★';
+                    }
+                });
+            });
+            
+            star.addEventListener('mouseout', function() {
+                const currentRating = parseInt(document.getElementById('rating-value').value);
+                document.querySelectorAll('.star').forEach((s, index) => {
+                    if (index >= currentRating) {
+                        s.textContent = '☆';
+                    }
+                });
+            });
+        });
+        
+        // Form submission
+        document.getElementById('reviewForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Get form values
+            const name = document.getElementById('reviewer-name').value;
+            const email = document.getElementById('reviewer-email').value;
+            const type = document.querySelector('input[name="review-type"]:checked').value;
+            const rating = document.getElementById('rating-value').value;
+            const title = document.getElementById('review-title').value;
+            const text = document.getElementById('review-text').value;
+            
+            // In a real application, you would send this data to your server
+            console.log('Review submitted:', {
+                name,
+                email,
+                type,
+                rating,
+                title,
+                text,
+                date: new Date().toISOString()
+            });
+            
+            // Show confirmation
+            document.getElementById('confirmation').style.display = 'block';
+            
+            // Scroll to confirmation
+            document.getElementById('confirmation').scrollIntoView({ behavior: 'smooth' });
+            
+            // Reset form after delay (optional)
+            setTimeout(() => {
+                this.reset();
+                document.getElementById('confirmation').style.display = 'none';
+                document.getElementById('reviewFormContainer').style.display = 'none';
+                document.querySelectorAll('.star').forEach(s => {
+                    s.classList.remove('selected');
+                    s.textContent = '☆';
+                });
+                document.getElementById('rating-value').value = '0';
+            }, 5000);
+        });
+    </script>
+</body>
+</html>

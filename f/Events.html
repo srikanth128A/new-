@@ -1,0 +1,495 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dining Spot - Special Events Booking</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: #f9f5f0;
+            color: #333;
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        header {
+            background-color: #d4a762;
+            color: white;
+            padding: 30px 0;
+            text-align: center;
+            margin-bottom: 40px;
+            border-bottom: 5px solid #b88a4a;
+        }
+        
+        h1 {
+            margin: 0;
+            font-size: 2.8em;
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.2);
+        }
+        
+        .tagline {
+            font-style: italic;
+            margin-top: 5px;
+            font-size: 1.2em;
+        }
+        
+        .events-intro {
+            text-align: center;
+            max-width: 800px;
+            margin: 0 auto 40px;
+        }
+        
+        .events-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 30px;
+            margin-bottom: 50px;
+        }
+        
+        .event-card {
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+        }
+        
+        .event-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .event-image {
+            height: 200px;
+            background-size: cover;
+            background-position: center;
+        }
+        
+        .event-details {
+            padding: 25px;
+        }
+        
+        .event-details h3 {
+            margin-top: 0;
+            color: #b88a4a;
+            font-size: 1.5em;
+        }
+        
+        .event-date {
+            color: #8b0000;
+            font-weight: bold;
+            margin: 10px 0;
+        }
+        
+        .event-price {
+            font-weight: bold;
+            font-size: 1.2em;
+            color: #333;
+            margin: 15px 0;
+        }
+        
+        .book-btn {
+            background-color: #b88a4a;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1em;
+            width: 100%;
+            transition: background-color 0.3s;
+        }
+        
+        .book-btn:hover {
+            background-color: #a0783e;
+        }
+        
+        .booking-form-container {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            z-index: 1000;
+            overflow-y: auto;
+        }
+        
+        .booking-form {
+            background: white;
+            max-width: 600px;
+            margin: 50px auto;
+            padding: 30px;
+            border-radius: 10px;
+            position: relative;
+        }
+        
+        .close-btn {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            font-size: 1.5em;
+            cursor: pointer;
+            color: #777;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #555;
+        }
+        
+        .form-control {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 1em;
+        }
+        
+        .form-row {
+            display: flex;
+            gap: 20px;
+        }
+        
+        .form-row .form-group {
+            flex: 1;
+        }
+        
+        .submit-btn {
+            background-color: #8b0000;
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            font-size: 1.1em;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            display: block;
+            width: 100%;
+            margin-top: 20px;
+        }
+        
+        .submit-btn:hover {
+            background-color: #6b0000;
+        }
+        
+        .confirmation {
+            display: none;
+            background: #f0f8f0;
+            border: 1px solid #c8e6c8;
+            padding: 20px;
+            border-radius: 5px;
+            margin-top: 20px;
+            color: #2e7d32;
+        }
+        
+        footer {
+            text-align: center;
+            padding: 30px;
+            background-color: #333;
+            color: white;
+            margin-top: 50px;
+        }
+        
+        @media (max-width: 768px) {
+            .events-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .form-row {
+                flex-direction: column;
+                gap: 0;
+            }
+            
+            .booking-form {
+                margin: 20px auto;
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1>Dining Spot</h1>
+            <div class="tagline">Book Your Special Event With Us</div>
+        </div>
+    </header>
+    
+    <div class="container">
+        <div class="events-intro">
+            <h2>Celebrate Life's Special Moments</h2>
+            <p>From festive celebrations to personal milestones, Dining Spot offers unforgettable event experiences with exquisite cuisine and exceptional service. Browse our upcoming events and book your spot today.</p>
+        </div>
+        
+        <div class="events-grid">
+            <div class="event-card">
+                <div class="event-image" style="background-image: url('https://images.unsplash.com/photo-1540575467063-178a50c2df87?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80');"></div>
+                <div class="event-details">
+                    <h3>New Year's Eve Gala</h3>
+                    <p>Ring in the new year with our spectacular gala dinner featuring a 7-course tasting menu, live music, and champagne toast at midnight.</p>
+                    <div class="event-date">December 31, 2023</div>
+                    <div class="event-price">$150 per person</div>
+                    <button class="book-btn" data-event="New Year's Eve Gala" data-date="2023-12-31" data-price="150">Book Now</button>
+                </div>
+            </div>
+            
+            <div class="event-card">
+                <div class="event-image" style="background-image: url('https://limerrs.com/wp-content/uploads/2023/10/diwali_decor.jpg');"></div>
+                <div class="event-details">
+                    <h3>Diwali Festival Dinner</h3>
+                    <p>Celebrate the festival of lights with our special Diwali menu featuring traditional Indian dishes with a modern twist.</p>
+                    <div class="event-date">November 12, 2023</div>
+                    <div class="event-price">$85 per person</div>
+                    <button class="book-btn" data-event="Diwali Festival Dinner" data-date="2023-11-12" data-price="85">Book Now</button>
+                </div>
+            </div>
+            
+            <div class="event-card">
+                <div class="event-image" style="background-image: url('https://images.unsplash.com/photo-1513151233558-d860c5398176?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80');"></div>
+                <div class="event-details">
+                    <h3>Birthday Celebrations</h3>
+                    <p>Make your birthday unforgettable with our personalized birthday packages including custom cake, decorations, and special menu.</p>
+                    <div class="event-date">Available any date</div>
+                    <div class="event-price">Packages from $250</div>
+                    <button class="book-btn" data-event="Birthday Celebration" data-date="" data-price="250">Book Now</button>
+                </div>
+            </div>
+            
+            <div class="event-card">
+                <div class="event-image" style="background-image: url('https://images.unsplash.com/photo-1504674900247-0877df9cc836?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80');"></div>
+                <div class="event-details">
+                    <h3>International Food Festival</h3>
+                    <p>A culinary journey around the world with tasting portions from 10 different cuisines, live cooking demonstrations, and wine pairings.</p>
+                    <div class="event-date">October 15-17, 2023</div>
+                    <div class="event-price">$75 per person</div>
+                    <button class="book-btn" data-event="International Food Festival" data-date="2023-10-15" data-price="75">Book Now</button>
+                </div>
+            </div>
+            
+            <div class="event-card">
+                <div class="event-image" style="background-image: url('https://res.cloudinary.com/the-infatuation/image/upload/c_scale,w_1200,q_auto,f_auto/images/Mara_MoonlitRoad_Minneapolis17_ly7apa');"></div>
+                <div class="event-details">
+                    <h3>Resturant Aniversary</h3>
+                    <p>We celebrate our resturant aniversary it includes dinner for two with special menu, rose petals, and complimentary champagne.</p>
+                    <div class="event-date">August 12,Every Year</div>
+                    <div class="event-price">$20 per couple</div>
+                    <button class="book-btn" data-event="Valentine's Day Dinner" data-date="2024-02-14" data-price="120">Book Now</button>
+                </div>
+            </div>
+            
+            <div class="event-card">
+                <div class="event-image" style="background-image: url('https://images.unsplash.com/photo-1511795409834-ef04bbd61622?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80');"></div>
+                <div class="event-details">
+                    <h3>Corporate Holiday Party</h3>
+                    <p>Host your company's holiday celebration with us. Customizable packages for groups of 20-200 people.</p>
+                    <div class="event-date">December 1-23, 2023</div>
+                    <div class="event-price">Starting at $50 per person</div>
+                    <button class="book-btn" data-event="Corporate Holiday Party" data-date="2023-12-01" data-price="50">Book Now</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div id="bookingModal" class="booking-form-container">
+        <div class="booking-form">
+            <span class="close-btn">&times;</span>
+            <h2 id="modal-title">Book Your Event</h2>
+            <form id="eventBookingForm">
+                <input type="hidden" id="event-name">
+                <input type="hidden" id="event-date">
+                <input type="hidden" id="event-price">
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="name">Full Name</label>
+                        <input type="text" id="name" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email Address</label>
+                        <input type="email" id="email" class="form-control" required>
+                    </div>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="phone">Phone Number</label>
+                        <input type="tel" id="phone" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="guests">Number of Guests</label>
+                        <input type="number" id="guests" class="form-control" min="1" required>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="booking-date">Event Date</label>
+                    <input type="date" id="booking-date" class="form-control">
+                </div>
+                
+                <div class="form-group">
+                    <label for="time">Preferred Time</label>
+                    <select id="time" class="form-control" required>
+                        <option value="">Select time</option>
+                        <option value="18:00">6:00 PM</option>
+                        <option value="18:30">6:30 PM</option>
+                        <option value="19:00">7:00 PM</option>
+                        <option value="19:30">7:30 PM</option>
+                        <option value="20:00">8:00 PM</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="special-requests">Special Requests</label>
+                    <textarea id="special-requests" class="form-control" rows="4" placeholder="Dietary restrictions, decorations, special arrangements, etc."></textarea>
+                </div>
+                
+                <div class="form-group">
+                    <input type="checkbox" id="terms" required>
+                    <label for="terms">I agree to the <a href="#">event booking terms</a> and cancellation policy</label>
+                </div>
+                
+                <button type="submit" class="submit-btn">Complete Booking</button>
+                
+                <div id="confirmation" class="confirmation">
+                    <h3>Thank you for your booking!</h3>
+                    <p>We've received your booking for <span id="confirm-event"></span>.</p>
+                    <p>A confirmation has been sent to <span id="confirm-email"></span> with all the details.</p>
+                    <p>Our events coordinator will contact you within 24 hours to confirm all arrangements.</p>
+                </div>
+            </form>
+        </div>
+    </div>
+    
+    <footer>
+        <div class="container">
+            <p>&copy; 2023 Dining Spot. All rights reserved.</p>
+            <p>123 Culinary Avenue, Foodie City | (555) 123-4567 | events@diningspot.com</p>
+        </div>
+    </footer>
+    
+    <script>
+        // Open booking modal when book button is clicked
+        document.querySelectorAll('.book-btn').forEach(button => {
+            button.addEventListener('click', function() {
+                const eventName = this.getAttribute('data-event');
+                const eventDate = this.getAttribute('data-date');
+                const eventPrice = this.getAttribute('data-price');
+                
+                document.getElementById('modal-title').textContent = `Book: ${eventName}`;
+                document.getElementById('event-name').value = eventName;
+                document.getElementById('event-date').value = eventDate;
+                document.getElementById('event-price').value = eventPrice;
+                
+                // Set the booking date if event has fixed date
+                if (eventDate) {
+                    document.getElementById('booking-date').value = eventDate;
+                    document.getElementById('booking-date').style.display = 'none';
+                    document.querySelector('label[for="booking-date"]').style.display = 'none';
+                } else {
+                    document.getElementById('booking-date').style.display = 'block';
+                    document.querySelector('label[for="booking-date"]').style.display = 'block';
+                    // Set minimum date to today
+                    const today = new Date().toISOString().split('T')[0];
+                    document.getElementById('booking-date').min = today;
+                }
+                
+                document.getElementById('bookingModal').style.display = 'block';
+                document.body.style.overflow = 'hidden';
+            });
+        });
+        
+        // Close booking modal
+        document.querySelector('.close-btn').addEventListener('click', function() {
+            document.getElementById('bookingModal').style.display = 'none';
+            document.body.style.overflow = 'auto';
+        });
+        
+        // Close modal when clicking outside
+        window.addEventListener('click', function(event) {
+            if (event.target === document.getElementById('bookingModal')) {
+                document.getElementById('bookingModal').style.display = 'none';
+                document.body.style.overflow = 'auto';
+            }
+        });
+        
+        // Handle form submission
+        document.getElementById('eventBookingForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Get form values
+            const eventName = document.getElementById('event-name').value;
+            const name = document.getElementById('name').value;
+            const email = document.getElementById('email').value;
+            const phone = document.getElementById('phone').value;
+            const guests = document.getElementById('guests').value;
+            const date = document.getElementById('booking-date').value || document.getElementById('event-date').value;
+            const time = document.getElementById('time').value;
+            const requests = document.getElementById('special-requests').value;
+            
+            // Format date for display
+            const dateObj = new Date(date);
+            const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+            const formattedDate = dateObj.toLocaleDateString('en-US', options);
+            
+            // Format time for display
+            let formattedTime = '';
+            if (time) {
+                const [hours, minutes] = time.split(':');
+                const hourNum = parseInt(hours);
+                formattedTime = hourNum > 12 ? `${hourNum - 12}:${minutes} PM` : `${hourNum}:${minutes} AM`;
+                if (hourNum === 12) formattedTime = `12:${minutes} PM`;
+            }
+            
+            // Display confirmation
+            document.getElementById('confirm-event').textContent = eventName;
+            document.getElementById('confirm-email').textContent = email;
+            
+            document.getElementById('confirmation').style.display = 'block';
+            
+            // Scroll to confirmation
+            document.getElementById('confirmation').scrollIntoView({ behavior: 'smooth' });
+            
+            // In a real application, you would send this data to your server
+            console.log('Event booking submitted:', {
+                eventName,
+                name,
+                email,
+                phone,
+                guests,
+                date,
+                time,
+                requests,
+                price: document.getElementById('event-price').value,
+                timestamp: new Date().toISOString()
+            });
+            
+            // Reset form after delay (optional)
+            setTimeout(() => {
+                this.reset();
+                document.getElementById('confirmation').style.display = 'none';
+                document.getElementById('bookingModal').style.display = 'none';
+                document.body.style.overflow = 'auto';
+            }, 5000);
+        });
+    </script>
+</body>
+</html>

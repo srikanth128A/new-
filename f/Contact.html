@@ -1,0 +1,540 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Us - Dining Spot</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* General Styles */
+        :root {
+            --primary-color: #e67e22;
+            --secondary-color: #d35400;
+            --dark-color: #333;
+            --light-color: #f4f4f4;
+            --white: #fff;
+            --shadow: 0 5px 15px rgba(0,0,0,0.1);
+            --transition: all 0.3s ease;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            line-height: 1.6;
+            color: var(--dark-color);
+            background-color: var(--light-color);
+        }
+        
+        h1, h2, h3, h4 {
+            font-family: 'Playfair Display', serif;
+            font-weight: 700;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        .section-title {
+            text-align: center;
+            margin-bottom: 50px;
+            font-size: 2.5rem;
+            color: var(--dark-color);
+            position: relative;
+        }
+        
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            background: var(--primary-color);
+        }
+        
+        .btn {
+            display: inline-block;
+            background: var(--primary-color);
+            color: var(--white);
+            padding: 12px 30px;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 600;
+            transition: var(--transition);
+        }
+        
+        .btn:hover {
+            background: var(--secondary-color);
+            transform: translateY(-3px);
+            box-shadow: var(--shadow);
+        }
+        
+        /* Contact Section */
+        .contact {
+            padding: 100px 0;
+            background-color: var(--white);
+        }
+        
+        .contact-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 50px;
+        }
+        
+        .contact-info {
+            margin-bottom: 30px;
+        }
+        
+        .contact-info h3 {
+            font-size: 1.8rem;
+            margin-bottom: 30px;
+            color: var(--dark-color);
+        }
+        
+        .info-item {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 25px;
+        }
+        
+        .info-icon {
+            width: 50px;
+            height: 50px;
+            background: rgba(230, 126, 34, 0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 20px;
+            color: var(--primary-color);
+            font-size: 1.2rem;
+        }
+        
+        .info-content h4 {
+            font-size: 1.2rem;
+            margin-bottom: 5px;
+        }
+        
+        .info-content p, .info-content a {
+            color: #666;
+            font-size: 1rem;
+        }
+        
+        .info-content a {
+            transition: var(--transition);
+        }
+        
+        .info-content a:hover {
+            color: var(--primary-color);
+        }
+        
+        /* Map */
+        .map-container {
+            height: 300px;
+            margin-top: 30px;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+        }
+        
+        .map-container iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+        
+        /* Contact Form */
+        .contact-form {
+            background: var(--light-color);
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: var(--shadow);
+        }
+        
+        .contact-form h3 {
+            font-size: 1.8rem;
+            margin-bottom: 30px;
+            color: var(--dark-color);
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: var(--dark-color);
+        }
+        
+        .form-control {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-family: 'Poppins', sans-serif;
+            font-size: 1rem;
+            transition: var(--transition);
+        }
+        
+        .form-control:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(230, 126, 34, 0.2);
+        }
+        
+        textarea.form-control {
+            min-height: 150px;
+            resize: vertical;
+        }
+        
+        .submit-btn {
+            width: 100%;
+            padding: 15px;
+            font-size: 1.1rem;
+        }
+        
+        /* Hours Section */
+        .hours {
+            margin-top: 50px;
+        }
+        
+        .hours h3 {
+            font-size: 1.8rem;
+            margin-bottom: 20px;
+            color: var(--dark-color);
+        }
+        
+        .hours-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        
+        .hours-table tr {
+            border-bottom: 1px solid #eee;
+        }
+        
+        .hours-table tr:last-child {
+            border-bottom: none;
+        }
+        
+        .hours-table td {
+            padding: 12px 0;
+        }
+        
+        .hours-table td:first-child {
+            font-weight: 600;
+        }
+        
+        .hours-table td:last-child {
+            text-align: right;
+        }
+        
+        /* Social Media */
+        .social-media {
+            margin-top: 30px;
+        }
+        
+        .social-media h4 {
+            font-size: 1.2rem;
+            margin-bottom: 15px;
+        }
+        
+        .social-links {
+            display: flex;
+            gap: 15px;
+        }
+        
+        .social-links a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            background: rgba(230, 126, 34, 0.1);
+            border-radius: 50%;
+            color: var(--primary-color);
+            font-size: 1.2rem;
+            transition: var(--transition);
+        }
+        
+        .social-links a:hover {
+            background: var(--primary-color);
+            color: var(--white);
+            transform: translateY(-3px);
+        }
+        
+        /* Success Message */
+        .success-message {
+            display: none;
+            background: #4CAF50;
+            color: white;
+            padding: 15px;
+            border-radius: 5px;
+            margin-top: 20px;
+            text-align: center;
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 992px) {
+            .section-title {
+                font-size: 2.2rem;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .section-title {
+                font-size: 2rem;
+            }
+            
+            .contact-container {
+                grid-template-columns: 1fr;
+            }
+            
+            .map-container {
+                height: 250px;
+            }
+        }
+        
+        @media (max-width: 576px) {
+            .section-title {
+                font-size: 1.8rem;
+            }
+            
+            .info-item {
+                flex-direction: column;
+            }
+            
+            .info-icon {
+                margin-bottom: 10px;
+                margin-right: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Contact Section -->
+    <section id="contact" class="contact">
+        <div class="container">
+            <h2 class="section-title">Contact Dining Spot</h2>
+            
+            <div class="contact-container">
+                <!-- Contact Information -->
+                <div class="contact-info">
+                    <h3>Get in Touch</h3>
+                    
+                    <div class="info-item">
+                        <div class="info-icon">
+                            <i class="fas fa-map-marker-alt"></i>
+                        </div>
+                        <div class="info-content">
+                            <h4>Address</h4>
+                            <p>Denton, TX 76201, USA</p>
+                        </div>
+                    </div>
+                    
+                    <div class="info-item">
+                        <div class="info-icon">
+                            <i class="fas fa-phone-alt"></i>
+                        </div>
+                        <div class="info-content">
+                            <h4>Phone</h4>
+                            <p><a href="tel:+19392604717">+1 9392604717</a></p>
+                        </div>
+                    </div>
+                    
+                    <div class="info-item">
+                        <div class="info-icon">
+                            <i class="fas fa-envelope"></i>
+                        </div>
+                        <div class="info-content">
+                            <h4>Email</h4>
+                            <p><a href="mailto:info@diningspot.com">info@diningspot.com</a></p>
+                        </div>
+                    </div>
+                    
+                    <div class="info-item">
+                        <div class="info-icon">
+                            <i class="fas fa-clock"></i>
+                        </div>
+                        <div class="info-content">
+                            <h4>Reservations</h4>
+                            <p><a href="mailto:reservations@diningspot.com">reservations@diningspot.com</a></p>
+                        </div>
+                    </div>
+                    
+                    <!-- Map -->
+                    <div class="map-container">
+                        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3347.123456789012!2d-97.1331!3d33.2148!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMzPCsDEyJzUzLjMiTiA5N8KwMDcnNTkuNyJX!5e0!3m2!1sen!2sus!4v1234567890123!5m2!1sen!2sus" allowfullscreen="" loading="lazy"></iframe>
+                    </div>
+                    
+                    <!-- Hours -->
+                    <div class="hours">
+                        <h3>Opening Hours</h3>
+                        <table class="hours-table">
+                            <tr>
+                                <td>Monday - Thursday</td>
+                                <td>11:00 AM - 10:00 PM</td>
+                            </tr>
+                            <tr>
+                                <td>Friday - Saturday</td>
+                                <td>11:00 AM - 11:00 PM</td>
+                            </tr>
+                            <tr>
+                                <td>Sunday</td>
+                                <td>10:00 AM - 9:00 PM</td>
+                            </tr>
+                        </table>
+                    </div>
+                    
+                    <!-- Social Media -->
+                    <div class="social-media">
+                        <h4>Follow Us</h4>
+                        <div class="social-links">
+             <a href="https://www.instagram.com/_srikanthchowdary28_/?next=%2F" target="_blank" class="instagram"><i class="fab fa-instagram"></i></a></li>
+            <a href="https://www.facebook.com/profile.php?id=61573114504830" target="_blank" class="facebook"><i class="fab fa-facebook"></i></a></li>
+            <a href="https://youtube.com/@srikanthyarraguntla?si=_iZl353EBnTEkMcn" target="_blank" class="youtube"><i class="fab fa-youtube"></i></a></li>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Contact Form -->
+                <div class="contact-form">
+                    <h3>Send Us a Message</h3>
+                    <form id="contactForm">
+                        <div class="form-group">
+                            <label for="name">Your Name</label>
+                            <input type="text" id="name" class="form-control" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="email">Email Address</label>
+                            <input type="email" id="email" class="form-control" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="phone">Phone Number</label>
+                            <input type="tel" id="phone" class="form-control">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="subject">Subject</label>
+                            <select id="subject" class="form-control" required>
+                                <option value="" disabled selected>Select a subject</option>
+                                <option value="reservation">Reservation Inquiry</option>
+                                <option value="event">Event Booking</option>
+                                <option value="feedback">Feedback</option>
+                                <option value="other">Other</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="message">Your Message</label>
+                            <textarea id="message" class="form-control" required></textarea>
+                        </div>
+                        
+                        <button type="submit" class="btn submit-btn">Send Message</button>
+                        
+                        <div id="successMessage" class="success-message">
+                            Thank you for your message! We'll get back to you soon.
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        // Form Validation and Submission
+        const contactForm = document.getElementById('contactForm');
+        const successMessage = document.getElementById('successMessage');
+        
+        contactForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Get form values
+            const name = document.getElementById('name').value;
+            const email = document.getElementById('email').value;
+            const phone = document.getElementById('phone').value;
+            const subject = document.getElementById('subject').value;
+            const message = document.getElementById('message').value;
+            
+            // Simple validation
+            if (!name || !email || !subject || !message) {
+                alert('Please fill in all required fields');
+                return;
+            }
+            
+            // In a real application, you would send this data to your server
+            console.log('Form submitted:', {
+                name,
+                email,
+                phone,
+                subject,
+                message
+            });
+            
+            // Show success message
+            successMessage.style.display = 'block';
+            
+            // Reset form
+            contactForm.reset();
+            
+            // Hide success message after 5 seconds
+            setTimeout(() => {
+                successMessage.style.display = 'none';
+            }, 5000);
+        });
+        
+        // Phone number formatting
+        const phoneInput = document.getElementById('phone');
+        
+        phoneInput.addEventListener('input', function(e) {
+            // Format phone number as (XXX) XXX-XXXX
+            const cleaned = ('' + e.target.value).replace(/\D/g, '');
+            const match = cleaned.match(/^(\d{0,3})(\d{0,3})(\d{0,4})$/);
+            
+            if (match) {
+                e.target.value = !match[2] ? match[1] : '(' + match[1] + ') ' + match[2] + (match[3] ? '-' + match[3] : '');
+            }
+        });
+        
+        // Smooth scrolling for navigation
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                const targetElement = document.querySelector(targetId);
+                
+                if (targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 100,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+        
+        // Initialize map with more interactive features
+        function initMap() {
+            // This would be replaced with actual Google Maps API code
+            console.log('Map would be initialized here with Google Maps API');
+        }
+        
+        // Initialize when page loads
+        window.addEventListener('DOMContentLoaded', initMap);
+    </script>
+</body>
+</html>

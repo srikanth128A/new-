@@ -1,0 +1,622 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dining Spot Restaurant</title>
+    <link rel="shortcut icon" href="https://icon-library.com/images/restaurant-icon-transparent/restaurant-icon-transparent-17.jpg">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* General Styles */
+        :root {
+            --primary-color: #e67e22;
+            --secondary-color: #d35400;
+            --dark-color: #333;
+            --light-color: #f4f4f4;
+            --white: #fff;
+            --shadow: 0 5px 15px rgba(0,0,0,0.1);
+            --transition: all 0.3s ease;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background-color: var(--light-color);
+        }
+        
+        h1, h2, h3, h4 {
+            font-family: 'Playfair Display', serif;
+            font-weight: 700;
+        }
+        
+        a {
+            text-decoration: none;
+            color: var(--dark-color);
+        }
+        
+        ul {
+            list-style: none;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        .btn {
+            display: inline-block;
+            background: var(--primary-color);
+            color: var(--white);
+            padding: 12px 30px;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 600;
+            transition: var(--transition);
+        }
+        
+        .btn:hover {
+            background: var(--secondary-color);
+            transform: translateY(-3px);
+            box-shadow: var(--shadow);
+        }
+        
+        .section-title {
+            text-align: center;
+            margin-bottom: 50px;
+            font-size: 2.5rem;
+            color: var(--dark-color);
+            position: relative;
+        }
+        
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            background: var(--primary-color);
+        }
+        
+        /* Header Styles */
+        header {
+            background-color: var(--white);
+            box-shadow: var(--shadow);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+        }
+        
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 0;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+        }
+        
+        .logo img {
+            height: 50px;
+            margin-right: 15px;
+        }
+        
+        .logo h1 {
+            font-size: 1.8rem;
+            color: var(--dark-color);
+        }
+        
+        .logo span {
+            color: var(--primary-color);
+        }
+        
+        .nav-links {
+            display: flex;
+        }
+        
+        .nav-links li {
+            margin-left: 30px;
+        }
+        
+        .nav-links a {
+            font-weight: 600;
+            transition: var(--transition);
+            position: relative;
+        }
+        
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--primary-color);
+            transition: var(--transition);
+        }
+        
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+        
+        .nav-links a:hover {
+            color: var(--primary-color);
+        }
+        
+        .hamburger {
+            display: none;
+            cursor: pointer;
+        }
+        
+        /* Hero Section */
+        .hero {
+            height: 100vh;
+            background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), 
+                        url('https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80') no-repeat center center/cover;
+            display: flex;
+            align-items: center;
+            text-align: center;
+            color: var(--white);
+            padding-top: 80px;
+        }
+        
+        .hero-content {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .hero h2 {
+            font-size: 4rem;
+            margin-bottom: 20px;
+            animation: fadeInDown 1s ease;
+        }
+        
+        .hero p {
+            font-size: 1.2rem;
+            margin-bottom: 30px;
+            animation: fadeInUp 1s ease;
+        }
+        
+        .hero .btn {
+            animation: fadeIn 1.5s ease;
+        }
+        
+        /* About Section */
+        .about {
+            padding: 100px 0;
+            background-color: var(--white);
+        }
+        
+        .about-content {
+            display: flex;
+            align-items: center;
+            gap: 50px;
+        }
+        
+        .about-img {
+            flex: 1;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+        }
+        
+        .about-img img {
+            width: 100%;
+            height: auto;
+            transition: var(--transition);
+        }
+        
+        .about-img img:hover {
+            transform: scale(1.05);
+        }
+        
+        .about-text {
+            flex: 1;
+        }
+        
+        .about-text h3 {
+            font-size: 2rem;
+            margin-bottom: 20px;
+            color: var(--dark-color);
+        }
+        
+        .about-text p {
+            margin-bottom: 20px;
+            color: #666;
+        }
+        
+        /* Menu Section */
+        .menu {
+            padding: 100px 0;
+            background-color: var(--light-color);
+        }
+        
+        .menu-items {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+        
+        .menu-item {
+            background: var(--white);
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+        }
+        
+        .menu-item:hover {
+            transform: translateY(-10px);
+        }
+        
+        .menu-img {
+            height: 200px;
+            overflow: hidden;
+        }
+        
+        .menu-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: var(--transition);
+        }
+        
+        .menu-item:hover .menu-img img {
+            transform: scale(1.1);
+        }
+        
+        .menu-text {
+            padding: 20px;
+        }
+        
+        .menu-text h3 {
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+        }
+        
+        .menu-text p {
+            color: #666;
+            margin-bottom: 15px;
+        }
+        
+        .price {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--primary-color);
+        }
+        
+        /* Contact Section */
+        .contact {
+            padding: 100px 0;
+            background-color: var(--white);
+        }
+        
+        .contact-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 50px;
+        }
+        
+        .contact-info {
+            margin-bottom: 30px;
+        }
+        
+        .contact-info h3 {
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+        }
+        
+        .contact-info p {
+            margin-bottom: 10px;
+            color: #666;
+        }
+        
+        .contact-info i {
+            color: var(--primary-color);
+            margin-right: 10px;
+        }
+        
+        .contact-form input,
+        .contact-form textarea {
+            width: 100%;
+            padding: 15px;
+            margin-bottom: 20px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-family: 'Poppins', sans-serif;
+        }
+        
+        .contact-form textarea {
+            height: 150px;
+        }
+        
+        /* Footer */
+        footer {
+            background-color: var(--dark-color);
+            color: var(--white);
+            padding: 50px 0 20px;
+            text-align: center;
+        }
+        
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            margin-bottom: 30px;
+            text-align: left;
+        }
+        
+        .footer-col h3 {
+            font-size: 1.3rem;
+            margin-bottom: 20px;
+            color: var(--primary-color);
+        }
+        
+        .footer-col p {
+            margin-bottom: 15px;
+            color: #bbb;
+        }
+        
+        .social-links {
+            display: flex;
+            gap: 15px;
+        }
+        
+        .social-links a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 50%;
+            color: var(--white);
+            transition: var(--transition);
+        }
+        
+        .social-links a:hover {
+            background: var(--primary-color);
+            transform: translateY(-3px);
+        }
+        
+        .copyright {
+            border-top: 1px solid rgba(255,255,255,0.1);
+            padding-top: 20px;
+            color: #bbb;
+        }
+        
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 992px) {
+            .about-content {
+                flex-direction: column;
+            }
+            
+            .hero h2 {
+                font-size: 3rem;
+            }
+        }
+        
+              /* Social Media Icons */
+        .social-media h3 {
+            font-size: 24px;
+            color: #333;
+            margin-bottom: 10px;
+            text-align: center;
+        }
+
+        .social-media ul {
+            list-style-type: none;
+            padding: 0;
+            text-align: center;
+        }
+
+        .social-media ul li {
+            display: inline;
+            margin-right: 20px;
+        }
+
+        .social-media ul li a {
+            font-size: 30px;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        /* Custom Colors for Social Media Icons */
+        .social-media .instagram {
+            color: #E1306C; /* Instagram Pink */
+        }
+
+        .social-media .facebook {
+            color: #1877F2; /* Facebook Blue */
+        }
+
+        .social-media .youtube {
+            color: #FF0000; /* YouTube Red */
+        }
+
+        .social-media ul li a:hover {
+            opacity: 0.7; /* Slight opacity on hover */
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 40px;
+            font-size: 14px;
+            color: #777;
+        }
+
+        /* Responsive Styles */
+        @media (max-width: 768px) {
+            section {
+                margin: 15px;
+                padding: 15px;
+            }
+
+            input, button {
+                font-size: 14px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <nav>
+                <div class="logo">
+                    <img src="https://img.freepik.com/premium-vector/golden-d-letter-logo-design-tempalte_89908-473.jpg" alt="Dining Spot Logo">
+                    <h1>Dining <span>Spot</span></h1>
+                </div>
+                
+               <ul class="nav-links">
+                <li><a href="home.html">Home</a></li>
+                <li><a href="menu.html">Menu</a></li>
+                 <li><a href="Table Reservation.html">Table Reservation</a></li>
+                <li><a href="about.html">About</a></li>
+                <li><a href="contact.html">Contact</a></li>
+                 <li><a href="Online Order.html">Online Order</a></li>
+                 <li><a href="Book a Room.html">Book a Room</a></li>
+                 <li><a href="Events.html">Events</a></li>
+                 <li><a href="Review.html">Review</a></li>
+                </ul>
+                
+                <div class="hamburger">
+                    <i class="fas fa-bars"></i>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <h2>Welcome to Dining Spot</h2>
+                <p>Experience the finest culinary delights in an atmosphere of elegance and comfort. We serve delicious food and provide luxurious accommodation for an unforgettable experience.</p>
+               
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="about">
+        <div class="container">
+            <h2 class="section-title">Our Story</h2>
+            <div class="about-content">
+                <div class="about-img">
+                    <img src="https://images.unsplash.com/photo-1555396273-367ea4eb4db5?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1374&q=80" alt="Restaurant Interior">
+                </div>
+                <div class="about-text">
+                    <h3>Discover Our Tradition</h3>
+                    <p>Founded in 2010, Dining Spot has been serving the Denton community with passion and dedication. Our chefs combine traditional recipes with modern techniques to create unforgettable dining experiences.</p>
+                    <p>We source only the freshest ingredients from local farmers and suppliers, ensuring every dish meets our high standards of quality and flavor.</p>
+                    <a href="View Our Menu.html" class="btn">View Our Menu</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+   
+         
+   
+
+
+    <!-- Contact Section -->
+    <section id="contact" class="contact">
+        <div class="container">
+          
+            <div class="contact-container">
+                <div class="contact-info">
+                    <h3>Get in Touch</h3>
+                    <p><i class="fas fa-map-marker-alt"></i>Denton, TX 76201,USA</p>
+                    <p><i class="fas fa-phone"></i> 9392604717</p>
+                    <p><i class="fas fa-envelope"></i> info@diningspot.com</p>
+                    <p><i class="fas fa-clock"></i> Open Daily: 11:00 AM - 10:00 PM</p>
+                    
+      <!-- Social Media Section -->
+    <div class="social-media">
+         <h3>Follow Us:</h3>
+        
+        <ul>
+            <li><a href="https://www.instagram.com/_srikanthchowdary28_/?next=%2F" target="_blank" class="instagram"><i class="fab fa-instagram"></i></a></li>
+            <li><a href="https://www.facebook.com/profile.php?id=61573114504830" target="_blank" class="facebook"><i class="fab fa-facebook"></i></a></li>
+            <li><a href="https://youtube.com/@srikanthyarraguntla?si=_iZl353EBnTEkMcn" target="_blank" class="youtube"><i class="fab fa-youtube"></i></a></li>
+        </ul>
+    </div>
+                
+                
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-col">
+                    <h3>Dining Spot</h3>
+                    <p>Experience culinary excellence in the heart of Denton. We combine quality ingredients with expert preparation to deliver memorable dining experiences.</p>
+                </div>
+                
+            
+                
+                <div class="footer-col">
+                    <h3>Opening Hours</h3>
+                    <p>Monday - Friday: 11am - 10pm</p>
+                    <p>Saturday: 10am - 11pm</p>
+                    <p>Sunday: 10am - 9pm</p>
+                </div>
+            </div>
+            
+            <div class="copyright">
+                <p>&copy; 2023 Dining Spot. All Rights Reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+   

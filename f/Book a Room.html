@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Room Booking</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: #f9f5f0;
+            color: #333;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        header {
+            background-color: #d4a762;
+            color: white;
+            padding: 25px 0;
+            text-align: center;
+            margin-bottom: 40px;
+            border-bottom: 5px solid #b88a4a;
+        }
+        
+        h1 {
+            margin: 0;
+            font-size: 2.8em;
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.2);
+        }
+        
+        .tagline {
+            font-style: italic;
+            margin-top: 5px;
+            font-size: 1.2em;
+        }
+        
+        .room-types {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 25px;
+            margin-bottom: 40px;
+            justify-content: center;
+        }
+        
+        .room-card {
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+            width: 350px;
+            overflow: hidden;
+            transition: transform 0.3s ease;
+        }
+        
+        .room-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .room-image {
+            height: 200px;
+            background-size: cover;
+            background-position: center;
+        }
+        
+        .room-info {
+            padding: 20px;
+        }
+        
+        .room-info h3 {
+            margin-top: 0;
+            color: #b88a4a;
+            font-size: 1.5em;
+        }
+        
+        .room-info p {
+            color: #666;
+            line-height: 1.6;
+        }
+        
+        .room-features {
+            margin: 15px 0;
+            padding: 0;
+            list-style: none;
+        }
+        
+        .room-features li {
+            padding: 5px 0;
+            display: flex;
+            align-items: center;
+        }
+        
+        .room-features li::before {
+            content: "✓";
+            color: #b88a4a;
+            margin-right: 8px;
+            font-weight: bold;
+        }
+        
+        .price {
+            font-size: 1.3em;
+            font-weight: bold;
+            color: #8b0000;
+            margin: 15px 0;
+        }
+        
+        .booking-form {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            max-width: 800px;
+            margin: 0 auto 40px;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #555;
+        }
+        
+        .form-control {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 1em;
+        }
+        
+        .form-row {
+            display: flex;
+            gap: 20px;
+        }
+        
+        .form-row .form-group {
+            flex: 1;
+        }
+        
+        .payment-options {
+            margin: 25px 0;
+        }
+        
+        .payment-option {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+        
+        .payment-option input {
+            margin-right: 10px;
+        }
+        
+        .btn {
+            background-color: #b88a4a;
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            font-size: 1.1em;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            display: block;
+            width: 100%;
+        }
+        
+        .btn:hover {
+            background-color: #a0783e;
+        }
+        
+        .confirmation {
+            display: none;
+            background: #f0f8f0;
+            border: 1px solid #c8e6c8;
+            padding: 20px;
+            border-radius: 5px;
+            margin-top: 20px;
+            color: #2e7d32;
+        }
+        
+        footer {
+            text-align: center;
+            padding: 20px;
+            background-color: #333;
+            color: white;
+            margin-top: 50px;
+        }
+        
+        @media (max-width: 768px) {
+            .room-types {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .form-row {
+                flex-direction: column;
+                gap: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1>Dining Spot</h1>
+            <div class="tagline">Book your ccommodation</div>
+        </div>
+    </header>
+    
+    <div class="container">
+        <h2 style="text-align: center; color: #b88a4a;">Our Private Rooms</h2>
+        <p style="text-align: center; max-width: 800px; margin: 0 auto 30px;">
+            Elevate your dining experience with our exclusive private rooms is perfect for staying. Perfect for celebrations, business meetings, or intimate gatherings.
+        </p>
+        
+        <div class="room-types">
+            <div class="room-card">
+                <div class="room-image" style="background-image: url('https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80');"></div>
+                <div class="room-info">
+                    <h3>Single Room</h3>
+                 
+                    <ul class="room-features">
+                        <li>Seats up to 2 guests</li>
+                        <li>Private sommelier service</li>
+                        <li>Complimentary Food</li>
+                        
+                    </ul>
+                    <div class="price">$150 reservation fee</div>
+                </div>
+            </div>
+            
+            <div class="room-card">
+                <div class="room-image" style="background-image: url('https://images.unsplash.com/photo-1555396273-367ea4eb4db5?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80');"></div>
+                <div class="room-info">
+                    <h3>Double Room</h3>
+                   
+                    <ul class="room-features">
+                        <li>Seats up to 4 guests</li>
+                        <li>Chef's tasting menu only</li>
+                        <li>Interaction with culinary team</li>
+                        <li>Complimentary Food</li>
+                    </ul>
+                    <div class="price">$250 reservation fee</div>
+                </div>
+            </div>
+            
+            <div class="room-card">
+                <div class="room-image" style="background-image: url('https://images.unsplash.com/photo-1445116572660-236099ec97a0?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80');"></div>
+                <div class="room-info">
+                    <h3>The Garden Room</h3>
+                    <ul class="room-features">
+                        <li>Seats up to 2 guests</li>
+                        <li>Natural daylight or evening ambiance</li>
+                        <li>Complimentary Food</li>
+                        <li>Customizable decor</li>
+                    </ul>
+                    <div class="price">$350 reservation fee</div>
+                </div>
+            </div>
+        </div>
+        
+        <h2 style="text-align: center; color: #b88a4a;">Book Your Private Room</h2>
+        
+        <form id="bookingForm" class="booking-form">
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="name">Full Name</label>
+                    <input type="text" id="name" class="form-control" required>
+                </div>
+                <div class="form-group">
+                    <label for="email">Email Address</label>
+                    <input type="email" id="email" class="form-control" required>
+                </div>
+            </div>
+            
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="phone">Phone Number</label>
+                    <input type="tel" id="phone" class="form-control" required>
+                </div>
+                <div class="form-group">
+                    <label for="guests">Number of Guests</label>
+                    <input type="number" id="guests" class="form-control" min="1" required>
+                </div>
+            </div>
+            
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="date">Booking Date</label>
+                    <input type="date" id="date" class="form-control" required>
+                </div>
+                <div class="form-group">
+                    <label for="time">Time</label>
+                    <input type="time" id="time" class="form-control" required>
+                </div>
+            </div>
+            
+            <div class="form-group">
+                <label for="room">Room Type</label>
+                <select id="room" class="form-control" required>
+                    <option value="">Select a room</option>
+                    <option value="Single Room">The Single Room ($150)</option>
+                    <option value="Double Room">The Double Room ($250)</option>
+                    <option value="Gardhen Room">The Garden Room ($350)</option>
+                </select>
+            </div>
+            
+            <div class="form-group">
+                <label>Special Requests</label>
+                <textarea id="requests" class="form-control" rows="4" placeholder="Dietary restrictions, occasion details, etc."></textarea>
+            </div>
+            
+            <div class="payment-options">
+                <h3 style="color: #b88a4a; margin-bottom: 15px;">Payment Method</h3>
+                
+                <div class="payment-option">
+                    <input type="radio" id="credit-card" name="payment" value="credit-card" checked>
+                    <label for="credit-card">Credit/Debit Card</label>
+                </div>
+                
+                <div class="payment-option">
+                    <input type="radio" id="paypal" name="payment" value="paypal">
+                    <label for="paypal">PayPal</label>
+                </div>
+                
+                <div class="payment-option">
+                    <input type="radio" id="cash" name="payment" value="cash">
+                    <label for="cash">Pay at Restaurant</label>
+                </div>
+            </div>
+            
+            <button type="submit" class="btn">Complete Reservation</button>
+            
+            <div id="confirmation" class="confirmation">
+                <h3>Thank you for your reservation!</h3>
+                <p>We've sent a confirmation to your email address. A member of our team will contact you shortly to confirm details and payment.</p>
+                <p>Your reservation ID: <span id="reservation-id"></span></p>
+            </div>
+        </form>
+    </div>
+    
+    <footer>
+        <div class="container">
+            <p>&copy; 2023 Dining Spot. All rights reserved.</p>
+            <p>123 Culinary Avenue, Foodie City | (555) 123-4567</p>
+        </div>
+    </footer>
+    
+    <script>
+        document.getElementById('bookingForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Get form values
+            const name = document.getElementById('name').value;
+            const room = document.getElementById('room').value;
+            const date = document.getElementById('date').value;
+            const time = document.getElementById('time').value;
+            
+            // Generate random reservation ID
+            const reservationId = 'DS-' + Math.floor(100000 + Math.random() * 900000);
+            
+            // Display confirmation
+            document.getElementById('reservation-id').textContent = reservationId;
+            document.getElementById('confirmation').style.display = 'block';
+            
+            // Scroll to confirmation
+            document.getElementById('confirmation').scrollIntoView({ behavior: 'smooth' });
+            
+            // In a real application, you would send this data to your server
+            console.log('Reservation submitted:', {
+                name,
+                email: document.getElementById('email').value,
+                phone: document.getElementById('phone').value,
+                guests: document.getElementById('guests').value,
+                date,
+                time,
+                room,
+                requests: document.getElementById('requests').value,
+                payment: document.querySelector('input[name="payment"]:checked').value,
+                reservationId
+            });
+            
+            // Reset form (optional)
+            // this.reset();
+        });
+        
+        // Set minimum date to today
+        const today = new Date().toISOString().split('T')[0];
+        document.getElementById('date').min = today;
+    </script>
+</body>
+</html>
